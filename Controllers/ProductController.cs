@@ -30,6 +30,11 @@ namespace WebScraperMF.Controllers
 
         public async Task<IActionResult> searchProduct(string term)
         {
+        
+            if(term == null)
+            {
+                return RedirectToAction("Index","Home");
+            }
             var list = await _context.Products.Where(p => p.productName.Equals(term) && p.productSearchDate.Date >= DateTime.Today).OrderByDescending(o => o.productPrice).ToListAsync();
             if (list.Count > 0)
             {
