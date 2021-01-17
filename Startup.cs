@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebScraperMF.Core;
 using WebScraperMF.Data;
 
 namespace WebScraperMF
@@ -28,6 +29,11 @@ namespace WebScraperMF
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(
                 Configuration.GetConnectionString("DbConnection")));
             services.AddControllersWithViews();
+
+            services.AddTransient<IScraperService, AmazonScraper>();
+            services.AddTransient<IScraperService, NoonScraper>();
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
