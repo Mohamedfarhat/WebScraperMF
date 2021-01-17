@@ -1,0 +1,15 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome To WebScraper</h1>
+    <form method="get" asp-action="searchProduct" asp-controller="Product">
+        <div class="input-group">
+            <input type="search" class="form-control rounded" name="term" placeholder="Search Product Name" aria-label="Search"
+                   aria-describedby="search-addon" />
+            <button type="submit" class="btn btn-outline-primary">search</button>
+
+        </div>
+    </form>
+</div>
