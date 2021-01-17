@@ -23,11 +23,28 @@ namespace WebScraperMF
 
         public IConfiguration Configuration { get; }
 
+        public virtual void SetupDatabase(IServiceCollection services)
+        {
+            var connectionString = Configuration.GetConnectionString("DbConnection");
+
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>();
+            options.UseSqlServer(connectionString);
+            using (var context = new ApplicationDbContext(options.Options))
+            {
+                context.Database.Migrate();
+            }
+            services.AddDbContext<ApplicationDbContext>(o => o.UseSqlServer(connectionString));
+        }
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(
                 Configuration.GetConnectionString("DbConnection")));
+
+            SetupDatabase(services);
+
+            
+
             services.AddControllersWithViews();
 
             services.AddTransient<IScraperService, AmazonScraper>();
